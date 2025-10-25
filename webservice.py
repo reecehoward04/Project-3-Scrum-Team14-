@@ -29,3 +29,20 @@ def get_chart_type(choice):
         "2": "line"
     }
     return chart_types.get(choice, None)
+
+def extract_time_series(data):
+    for key in data.keys():
+        if "Time Series" in key:
+            return data[key]
+    return None
+
+def filter_data(time_series, start_date, end_date):
+    filtered = {}
+    for date_str, values in time_series.items():
+        try:
+            date = datetime.strptime(date_str, "%Y-%m-%d")
+        except ValueError:
+            date = datetime.strptime(date_str, "%Y-%m-%d %H:%M:%S")
+        if start_date <= date <= end_date:
+            filtered[date] = float(values["4. close"])
+    return dict(sorted(filtered.items()))
