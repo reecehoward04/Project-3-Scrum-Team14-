@@ -46,3 +46,20 @@ def filter_data(time_series, start_date, end_date):
         if start_date <= date <= end_date:
             filtered[date] = float(values["4. close"])
     return dict(sorted(filtered.items()))
+
+def plot_data(data, symbol, chart_type):
+    dates = list(data.keys())
+    prices = list(data.values())
+
+    plt.figure(figsize=(10,5))
+    if chart_type == "bar":
+        plt.bar(dates, prices, color='skyblue')
+    else:
+        plt.plot(dates, prices, color='orange')
+
+    plt.title(f"{symbol} Stock Prices")
+    plt.xlabel("Date")
+    plt.ylabel("Closing Price (USD)")
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    plt.show()
