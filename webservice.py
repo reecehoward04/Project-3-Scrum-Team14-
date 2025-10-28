@@ -48,7 +48,7 @@ def filter_data(time_series, start_date, end_date):
     return dict(sorted(filtered.items()))
 
 def plot_data (data, symbol, chart_type):
-    dates = list (date.keys())
+    dates = list (data.keys())
     prices = list (data.values())
 
     plt.figure(figsize=(10,5))
