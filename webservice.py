@@ -63,3 +63,53 @@ def plot_data(data, symbol, chart_type):
     plt.xticks(rotation=45)
     plt.tight_layout()
     plt.show()
+
+if __name__ == "__main__":
+    print("---Stock Data Analyzer---")
+    
+    symbol = input("Enter the stock symbol you are looking for (IBM, AAPL, TSLA, etc...): ").upper()
+    
+    print("\nChoose Time Series Function:")
+    print("1. Intraday (within market hours)")
+    print("2. Daily")
+    print("3. Weekly")
+    print("4. Monthly")
+    function_choice = input("Enter your choice (1-4): ")
+    
+    function = get_time_series_function(function_choice)
+    if function is None:
+        print("Invalid choice. Exiting...")
+        exit()
+        
+        print("\nChoose Chart Type:")
+        print("1. Bar Chart")
+        print("2. Line Chart")
+        chart_choice = input("Enter your choice (1-2): ")
+        
+        chart_type = get_chart_type(chart_choice)
+        if chart_type is None:
+            print("Invalid choice. Exiting...")
+            exit()
+            
+        start_date = input("Enter the start date (YYYY-MM-DD): ")
+        end_date = input("Enter the end date (YYYY-MM-DD): ")
+            
+        try:
+            start_date = datetime.strptime(start_date, "%Y-%m-%d")
+            end_date = datetime.strptime(end_date, "%Y-%m-%d")
+        except ValueError:
+                print("Invalid date format. Exiting...")
+                exit()
+                
+        if end_date < start_date:
+            print("End date can't be before the start date. Exiting...")
+            exit()
+            
+        data = get_api_data(symbol, function)
+        time_series = extract_time_series(data)
+        if time_series is None:
+            print("No No data returned. Check your stock symbol. Exiting...")
+            exit()
+            
+        filtered_data = filter_data(time_series, start_date, end_date)
+        plot_data(filtered_data, symbol, chart_type)
