@@ -1,2 +1,10 @@
 # Project-3-Scrum-Team14:
 We will be building and committing all changes to here in Github.
+
+To run the program:
+
+1: Clone/download the GitHub repo.
+
+2: Open in VS Code or navigate to folder in a bash terminal.
+
+3: Run "python webservice.py" to start the program!
